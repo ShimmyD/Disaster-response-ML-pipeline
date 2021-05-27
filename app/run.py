@@ -6,7 +6,10 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
+<<<<<<< HEAD
 import nltk
+=======
+>>>>>>> e2788bfaa437f58733ab8816274c630ef5ceff0f
 import re
 
 from flask import Flask
@@ -14,7 +17,10 @@ from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
+<<<<<<< HEAD
 nltk.download('stopwords') 
+=======
+>>>>>>> e2788bfaa437f58733ab8816274c630ef5ceff0f
 
 
 app = Flask(__name__)

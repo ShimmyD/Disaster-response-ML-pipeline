@@ -41,7 +41,11 @@ def clean_data(df):
 
         # convert column from string to numeric
         categories[column] = pd.to_numeric(categories[column])
+<<<<<<< HEAD
     # replace 2 in related category to 1 as each category can only have binary values 0 or 1. 
+=======
+    # replace 2 in related category to 1 as each category can only have numbers 0 or 1. 
+>>>>>>> e2788bfaa437f58733ab8816274c630ef5ceff0f
     categories=categories.replace(2,1)
     
     # drop original categories column from df
