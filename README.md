@@ -36,6 +36,11 @@ the message to predict classifications for 36 categories (multi-output classific
 
 ![image info](./classification.JPG)
 
+## Model limitations
+Disaster response dataset is an imbalanced multioutput classification dataset. Some classes have very few observations, for instance child_alone, shops, offer, tools, fire, while other classes like foods, earthquake,storm have many observations. This severly skewed class distritions will bias the model towards the majority class, resulting in a low precision, recall and f1 scores for the minority class (image below). Another factor that might affect the model's preformance is train and test split. The commone method for classification train and test split is using a straitified split. In our case, the iterativeStratification in skmultilearn.model_selection will help solve the problem, but due to run time constraint, a simple train_test_split is used. This random split may assign all the observations of a minority class to the test set, which cause the model to have never seen an observation from this class during the training.
+
+![image info](./classification report.JPG)
+
 ## How to run scripts
 ### Instructions:
 1. Run the following commands to set up database and model.
