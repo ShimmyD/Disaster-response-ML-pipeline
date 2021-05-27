@@ -31,8 +31,8 @@ the message to predict classifications for 36 categories (multi-output classific
 
 ### Web app
 ./app/run.py uploads dataset and model to web app. This web app displays dataset visualizations and uses trained model to input text and return classification results.
-![](<visualization.JPG>)
-![](<classification.JPG>)
+![image info](./visualization.JPG)
+![image info](./classification.JPG)
 
 
 
