@@ -1,4 +1,5 @@
 import sys
+from nltk.corpus import stopwords
 import nltk
 nltk.download(['punkt', 'wordnet','stopwords'])
 import numpy as np
@@ -8,7 +9,6 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 import re
-from nltk.corpus import stopwords
 
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC,LinearSVC
@@ -16,7 +16,8 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.model_selection import GridSearchCV
-import pickle
+import joblib
+
 
 def load_data(database_filepath):
     """create sqlite engine load cleaned dataset from database.
@@ -30,8 +31,11 @@ def load_data(database_filepath):
 #     engine = create_engine('sqlite:///'+database_filepath)
     conn = sqlite3.connect(database_filepath)
     df = pd.read_sql("SELECT * FROM "+ database_filepath[5:-3], conn)
+    print(df.head())
     X =df.message.values
     Y = df.iloc[:,4:].values
+    print(X.shape)
+    print(Y.shape)
     category_names=df.iloc[:,4:].columns
     return X,Y,category_names
 
@@ -74,7 +78,7 @@ def build_model():
            'clf__estimator__C':[1.5,0.8]}
     
     # create grid search object
-    cv = GridSearchCV(pipeline,param_grid=parameters,cv=2,n_jobs=-1,verbose=3)
+    cv = GridSearchCV(pipeline,param_grid=parameters,cv=2,verbose=3)
     return cv
 
 
@@ -96,7 +100,7 @@ def evaluate_model(model, X_test, y_test, category_names):
 def save_model(model, model_filepath):
     """pickle model 
     """
-    pickle.dump(model, open(model_filepath, 'wb'))
+    joblib.dump(model, model_filepath)
 
 
 def main():
@@ -106,7 +110,7 @@ def main():
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-        
+        print(X_train.shape,' ',Y_train.shape)
         print('Building model...')
         model = build_model()
         
