@@ -63,7 +63,11 @@ Disaster response dataset is an imbalanced multioutput classification dataset. S
 3. Go to http://0.0.0.0:3001/
 
 
+## Source
+The disaster response data source is owned by [Figure eight](https://appen.com/)
 
+## Acknowledgement
+Thanks to Figure Eight for providing this dataset and Udacity for guiding through this machine learning pipeline project
 
 
 
