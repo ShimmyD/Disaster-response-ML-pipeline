@@ -6,21 +6,18 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 from nltk.corpus import stopwords
-<<<<<<< HEAD
-import nltk
-=======
->>>>>>> e2788bfaa437f58733ab8816274c630ef5ceff0f
 import re
+import nltk
+nltk.download('stopwords') 
+
 
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
+import joblib
 from sqlalchemy import create_engine
-<<<<<<< HEAD
-nltk.download('stopwords') 
-=======
->>>>>>> e2788bfaa437f58733ab8816274c630ef5ceff0f
+
 
 
 app = Flask(__name__)
@@ -36,11 +33,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/DisasterResponse.db')
+engine = create_engine('sqlite:///./data/DisasterResponse.db')
 df = pd.read_sql_table('DisasterResponse', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+model = joblib.load("./models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -64,9 +61,7 @@ def index():
     vector=vect.fit_transform(df['message'].values)
     count=vector.toarray().sum(axis=0)
     words_lst=vect.get_feature_names()
-
     words_dic=dict(zip(words_lst,count))
-
     top_10=sorted(words_dic.items(), key=lambda kv: kv[1],reverse=True)[:10]
     words=[i[0] for i in top_10]
     counts=[i[1] for i in top_10]
@@ -109,8 +104,8 @@ def index():
                     'title': "Category"
                 }
             }
-        },
-        {
+        }
+        ,{
             'data': [
                 Bar(
                     x=words,
@@ -156,9 +151,9 @@ def go():
     )
 
 
-def main():
-    app.run(host='0.0.0.0', port=3001, debug=True)
+# def main():
+#     app.run(host='0.0.0.0', port=3001, debug=True)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
