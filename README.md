@@ -30,7 +30,6 @@ the message to predict classifications for 36 categories (multi-output classific
 * Exports the final model as a pickle file
 
 ### Web app
-<<<<<<< HEAD
 ./app/run.py uploads dataset and model to web app. This web app displays dataset visualizations and uses trained model to input text and return classification results.\
 
 ![image info](./visualization.JPG)\
@@ -49,7 +48,6 @@ Disaster response dataset is an imbalanced multioutput classification dataset. S
 
 ![image info](./classification_report.JPG)
 
->>>>>>> e2788bfaa437f58733ab8816274c630ef5ceff0f
 ## How to run scripts
 ### Instructions:
 1. Run the following commands to set up database and model.
