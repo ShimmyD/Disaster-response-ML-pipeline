@@ -2,42 +2,43 @@ import json
 import plotly
 import pandas as pd
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-from sklearn.feature_extraction.text import CountVectorizer
-from nltk.corpus import stopwords
-import re
-import nltk
-nltk.download('stopwords') 
+# from nltk.stem import WordNetLemmatizer
+# from nltk.tokenize import word_tokenize
+# from sklearn.feature_extraction.text import CountVectorizer
+# from nltk.corpus import stopwords
+# import re
+# import nltk
+# nltk.download('stopwords') 
 
 
-from flask import Flask
+# from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 # from sklearn.externals import joblib
 import joblib
 from sqlalchemy import create_engine
+from utils import tokenize
+from app import app
 
 
+# app = Flask(__name__)
 
-app = Flask(__name__)
+# def tokenize(text):
+#     stop_words = stopwords.words('english')
+#     text=text.lower()
+#     text = re.sub(r'[^\w\s]','',text)
+#     tokens=word_tokenize(text)
+#     lemmatizer=WordNetLemmatizer()
+#     clean_tokens=[lemmatizer.lemmatize(token).strip() for token in tokens if token not in stop_words]
 
-def tokenize(text):
-    stop_words = stopwords.words('english')
-    text=text.lower()
-    text = re.sub(r'[^\w\s]','',text)
-    tokens=word_tokenize(text)
-    lemmatizer=WordNetLemmatizer()
-    clean_tokens=[lemmatizer.lemmatize(token).strip() for token in tokens if token not in stop_words]
-
-    return clean_tokens
+#     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/DisasterResponse.db')
+engine = create_engine('sqlite:///./data/DisasterResponse.db')
 df = pd.read_sql_table('DisasterResponse', engine)
 
 # load model
-model = joblib.load("../models/classifier.pkl")
+model = joblib.load("./models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -57,14 +58,16 @@ def index():
     category_names=[i[0] for i in dic_sort]
     category_counts=[i[1] for i in dic_sort]
     
-    vect=CountVectorizer(tokenizer=tokenize)
-    vector=vect.fit_transform(df['message'].values)
-    count=vector.toarray().sum(axis=0)
-    words_lst=vect.get_feature_names()
-    words_dic=dict(zip(words_lst,count))
-    top_10=sorted(words_dic.items(), key=lambda kv: kv[1],reverse=True)[:10]
-    words=[i[0] for i in top_10]
-    counts=[i[1] for i in top_10]
+    # vect=CountVectorizer(tokenizer=tokenize)
+    # vector=vect.fit_transform(df['message'].values)
+    # count=vector.toarray().sum(axis=0)
+    # words_lst=vect.get_feature_names()
+    # words_dic=dict(zip(words_lst,count))
+    # top_10=sorted(words_dic.items(), key=lambda kv: kv[1],reverse=True)[:10]
+    # words=[i[0] for i in top_10]
+    # counts=[i[1] for i in top_10]
+    water_counts = df.groupby('water').count()['message']
+    water_names = ['no', 'yes'] 
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -108,18 +111,18 @@ def index():
         ,{
             'data': [
                 Bar(
-                    x=words,
-                    y=counts
+                    x=water_names,
+                    y=water_counts
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of top 10 words in message',
+                'title': 'Distribution of Water respose messages',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Word"
+                    'title': "Water"
                 }
             }
         }
@@ -151,9 +154,9 @@ def go():
     )
 
 
-# def main():
-#     app.run(host='0.0.0.0', port=3001, debug=True)
+def main():
+    app.run(host='0.0.0.0', port=3001, debug=True)
 
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
