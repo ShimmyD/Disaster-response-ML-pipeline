@@ -29,7 +29,7 @@ the message to predict classifications for 36 categories (multi-output classific
 * Outputs results on the test set
 * Exports the final model as a pickle file
 
-### Web app
+### Deploy Web app
 ./app/run.py uploads dataset and model to web app. This web app displays dataset visualizations and uses trained model to input text and return classification results.\
 
 ![image info](./visualization.JPG)\
@@ -41,7 +41,7 @@ Disaster response dataset is an imbalanced multioutput classification dataset. S
 
 ![image info](./classification_report.JPG)
 
-## How to run scripts
+## How to run and depoy to local server
 ### Instructions:
 1. Run the following commands to set up database and model.
 
@@ -55,6 +55,8 @@ Disaster response dataset is an imbalanced multioutput classification dataset. S
 
 3. Go to http://0.0.0.0:3001/
 
+## Web app on cloud server Heroku
+https://disaster-response-ml-pipeline.herokuapp.com/
 
 ## Source
 The disaster response data source is owned by [Figure eight](https://appen.com/)
