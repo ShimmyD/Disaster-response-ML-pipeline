@@ -62,7 +62,7 @@ https://disaster-response-ml-pipeline.herokuapp.com/
 The disaster response data source is owned by [Figure eight](https://appen.com/)
 
 ## Acknowledgement
-Thanks to Figure Eight for providing this dataset and Udacity for guiding through this machine learning pipeline project
+Kudos to Figure Eight for providing this dataset and Udacity for guiding through this machine learning pipeline project
 
 
 
